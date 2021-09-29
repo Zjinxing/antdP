@@ -37,6 +37,34 @@ export default defineConfig({
     {
       path: '/',
       component: './cgPages/index',
+      routes: [
+        {
+          path: '/',
+          redirect: '/page1',
+        },
+        {
+          path: '/page1',
+          component: './cgPages/Page1',
+          routes: [
+            {
+              path: '/page1',
+              redirect: '/page1/page1sub1',
+            },
+            {
+              path: '/page1/page1sub1',
+              component: './cgPages/Page1Sub1',
+            },
+            {
+              path: '/page1/page1sub2',
+              component: './cgPages/Page1Sub2',
+            },
+          ],
+        },
+        {
+          path: '/page2',
+          component: './cgPages/Page2',
+        },
+      ],
     },
   ],
   /* routes: [
@@ -356,4 +384,5 @@ export default defineConfig({
   },
   mfsu: {},
   webpack5: {},
+  exportStatic: {},
 });
