@@ -20,7 +20,7 @@ const menuData = [
     id: 'find',
   },
   {
-    name: '设置',
+    name: '新窗口',
     id: 'settings',
   },
 ];

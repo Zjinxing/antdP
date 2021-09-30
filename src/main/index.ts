@@ -21,8 +21,9 @@ function createWindow(name: string = 'mainWin') {
     ? `http://localhost:8000/#/${IS_MAIN ? '' : name}`
     : `${IS_MAIN ? '.' : './' + name}/index.html/#/${IS_MAIN ? '' : name}`;
   winMap[name] = new BrowserWindow({
-    width: 800,
+    width: 900,
     height: 600,
+    resizable: name !== 'page2',
     webPreferences: {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
@@ -42,6 +43,13 @@ ipcMain.handle('new-win', (e, params) => {
     createWindow(params.winName);
   } else {
     winMap[params.winName].show();
+  }
+});
+
+ipcMain.handle('close-win', (e, params) => {
+  const { winName } = params;
+  if (winMap[winName] && !winMap[winName].isDestroyed()) {
+    winMap[winName].close();
   }
 });
 

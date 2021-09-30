@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Button, Form, Checkbox, Input } from 'antd';
 import styles from './index.less';
 
@@ -12,6 +12,10 @@ const TitleContainer: React.FC<{ title: string; children?: ReactNode; className?
     {children}
   </div>
 );
+
+const closeWin = () => {
+  window.electron.ipcRenderer.invoke('close-win', { winName: 'page2' });
+};
 
 const SettingTitle: React.FC = () => {
   return (
@@ -39,49 +43,49 @@ const SettingTitle: React.FC = () => {
             <Form.Item>
               <Checkbox disabled checked>
                 <Form.Item label="开始">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             <Form.Item>
               <Checkbox>
                 <Form.Item label="读取进度">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             <Form.Item>
               <Checkbox>
                 <Form.Item label="CG鉴赏">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             <Form.Item>
               <Checkbox>
                 <Form.Item label="BGM鉴赏">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             <Form.Item>
               <Checkbox>
                 <Form.Item label="设置">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             <Form.Item>
               <Checkbox>
                 <Form.Item label="离开">
-                  <Input></Input>
+                  <Input />
                 </Form.Item>
               </Checkbox>
             </Form.Item>
             {/* </Form> */}
           </TitleContainer>
         </Form>
-        <div className={styles.uPreview}></div>
+        <div className={styles.uPreview} />
         <Form size="small">
           <TitleContainer title="按钮位置与坐标" className={styles.mPos}>
             <TitleContainer title="">
@@ -126,7 +130,7 @@ const SettingTitle: React.FC = () => {
       </div>
       <div className={styles.gFooter}>
         <Button type="primary">确认</Button>
-        <Button>取消</Button>
+        <Button onClick={closeWin}>取消</Button>
       </div>
     </div>
   );
