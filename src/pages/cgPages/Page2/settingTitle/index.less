@@ -1,0 +1,78 @@
+.gWrapper {
+  display: grid;
+  grid-template-rows: 1fr 60px;
+  height: calc(100vh - 46px);
+  .gMain {
+    display: grid;
+    grid-template-rows: 1fr 160px;
+    grid-template-columns: 250px auto;
+    .mProps {
+      grid-row: span 2;
+      background-color: #f0f0f0;
+    }
+    .mPos {
+      display: grid;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-template-columns: 1fr 1fr;
+      background-color: #f0f0f0;
+    }
+    .mPosChoose {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .mTitleProps {
+      display: grid;
+      grid-template-rows: 32px auto;
+    }
+  }
+  .gFooter {
+    text-align: right;
+  }
+  .gContainer {
+    position: relative;
+    margin: 10px 10px 5px 10px;
+    padding: 15px 5px 10px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    .uTitle {
+      position: absolute;
+      top: -7px;
+      left: 7px;
+      font-size: 13px;
+      line-height: 13px;
+      background-color: #f0f0f0;
+    }
+  }
+  .uPreview {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 15px;
+  }
+  .mPosForm {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  :global {
+    .ant-form {
+      .ant-row.ant-form-item {
+        margin-bottom: 5px;
+        font-size: 13px;
+        .ant-col.ant-form-item-label {
+          label {
+            font-size: 13px;
+          }
+        }
+        .ant-checkbox-wrapper {
+          font-size: 13px;
+        }
+      }
+    }
+    .ant-btn.ant-btn-sm {
+      font-size: 13px;
+    }
+  }
+}

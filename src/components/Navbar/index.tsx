@@ -1,33 +1,19 @@
 import { Menu } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 
-const NavBar: React.FC = () => {
-  const menuData = [
-    {
-      name: '新建',
-      id: 'new',
-    },
-    {
-      name: '打开',
-      id: 'open',
-    },
-    {
-      name: '保存',
-      id: 'save',
-    },
-    {
-      name: '查找',
-      id: 'find',
-    },
-  ];
+interface NavBarProps {
+  navData: { name: string; id: string }[];
+  onMenuClick?: (e: MenuInfo) => any;
+}
 
-  const onMenuClick = (e: MenuInfo) => {
-    console.log(e);
+const NavBar: React.FC<NavBarProps> = ({ navData, onMenuClick }) => {
+  const handleMenuClick = (e: MenuInfo) => {
+    onMenuClick && onMenuClick(e);
   };
 
   return (
-    <Menu onClick={onMenuClick} mode="horizontal">
-      {menuData.map((data) => (
+    <Menu onClick={handleMenuClick} mode="horizontal">
+      {navData.map((data) => (
         <Menu.Item key={data.id}>{data.name}</Menu.Item>
       ))}
     </Menu>

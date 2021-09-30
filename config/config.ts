@@ -8,6 +8,11 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   electronBuilder: {
     buildType: 'webpack',
+    builderOptions: {
+      win: {
+        target: ['portable'],
+      },
+    },
   },
   hash: true,
   antd: {},
@@ -55,17 +60,63 @@ export default defineConfig({
             },
             {
               path: '/page1/page1sub1',
-              component: './cgPages/Page1Sub1',
+              component: './cgPages/Page1/Page1Sub1',
             },
             {
               path: '/page1/page1sub2',
-              component: './cgPages/Page1Sub2',
+              component: './cgPages/Page1/Page1Sub2',
             },
           ],
         },
         {
           path: '/page2',
           component: './cgPages/Page2',
+          routes: [
+            {
+              path: '/page2',
+              redirect: '/page2/settingTitle',
+            },
+            {
+              path: '/page2/settingTitle',
+              component: './cgPages/Page2/settingTitle',
+            },
+            {
+              path: '/page2/settingAppreciation',
+              component: './cgPages/Page2/settingAppreciation',
+            },
+            {
+              path: '/page2/settingDialog',
+              component: './cgPages/Page2/settingDialog',
+            },
+            {
+              path: '/page2/settingGlobal',
+              component: './cgPages/Page2/settingGlobal',
+            },
+            {
+              path: '/page2/settingImage',
+              component: './cgPages/Page2/settingImage',
+            },
+            {
+              path: '/page2/settingProject',
+              component: './cgPages/Page2/settingProject',
+            },
+            {
+              path: '/page2/settingSL',
+              component: './cgPages/Page2/settingSL',
+            },
+            {
+              path: '/page2/settingPay',
+              component: './cgPages/Page2/settingPay',
+            },
+            {
+              path: '/page2/settingScene',
+              component: './cgPages/Page2/settingScene',
+            },
+            {
+              path: '/page2/settingSys',
+              component: './cgPages/Page2/settingSys',
+            },
+          ],
         },
       ],
     },
@@ -355,7 +406,7 @@ export default defineConfig({
   ], */
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': '#feb31b',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild

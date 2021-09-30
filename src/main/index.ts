@@ -1,4 +1,4 @@
-import { app, BrowserWindow, protocol } from 'electron';
+import { app, BrowserWindow, protocol, ipcMain } from 'electron';
 import createProtocol from 'umi-plugin-electron-builder/lib/createProtocol';
 import path from 'path';
 // import installExtension, {
@@ -6,14 +6,21 @@ import path from 'path';
 // } from 'electron-devtools-installer';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-let mainWindow: BrowserWindow;
+
+type WinMap = Record<string, BrowserWindow>;
+
+const winMap: WinMap = {};
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
+function createWindow(name: string = 'mainWin') {
+  const IS_MAIN = name === 'mainWin';
+  const url = isDevelopment
+    ? `http://localhost:8000/#/${IS_MAIN ? '' : name}`
+    : `${IS_MAIN ? '.' : './' + name}/index.html/#/${IS_MAIN ? '' : name}`;
+  winMap[name] = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -21,13 +28,22 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  winMap[name].webContents.send('test-event');
   if (isDevelopment) {
-    mainWindow.loadURL('http://localhost:8000');
+    winMap[name].loadURL(url);
   } else {
     createProtocol('app');
-    mainWindow.loadURL('app://./index.html');
+    winMap[name].loadURL(`app://${url}`);
   }
 }
+
+ipcMain.handle('new-win', (e, params) => {
+  if (!winMap[params.winName] || winMap[params.winName].isDestroyed()) {
+    createWindow(params.winName);
+  } else {
+    winMap[params.winName].show();
+  }
+});
 
 app.on('ready', async () => {
   // if (isDevelopment) {
@@ -43,7 +59,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (mainWindow === null) {
+  if (winMap.mainWin === null) {
     createWindow();
   }
 });
